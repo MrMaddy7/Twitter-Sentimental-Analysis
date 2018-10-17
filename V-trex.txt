@@ -1,0 +1,569 @@
+*******************To calculate errors in given series(EXP1)***************
+#include<iostream>
+#include<cmath>
+using namespace std;
+float value(float x,int n)
+{   int z;
+    float sum;
+    float rad;
+    rad = (3.14*x)/180;
+    float a =1;
+    int i;
+    for(i =1; i<=n;i++)
+    {
+        a = a*i;
+    }
+    sum = ((pow(-1,n))*(pow(rad,2*n+1)))/(a);
+    cout<<"The value of sinx is :\n"<<sum;
+    return sum;
+}
+
+int main()
+{
+    int a;
+    float b;
+    cout<<"Enter the term till which sinx is to be found :\n\n";
+    cin>>a;
+    cout<<"Enter the degrees of sinx :\n\n";
+    cin>>b;
+    value(45,4);
+    float c;
+    c = value(b,a);
+    cout<<"The value of sinx is"<<c;
+    float j;
+    j = (3.14*a)/180;
+    float val;
+    val = sin(j);
+   return 0;}
+*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*--*-*-*-*-*
+
+************************To implement bi section method and find the roots(EXP2)********************
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+double fun(double x)
+{
+    return ((x*x*x)-(2*x*x)+3);
+}
+double root(double a, double b)
+{
+    double c;
+    c=(a+b)/2.0;
+    if(fun(c)>-0.01 && fun(c)<0.01)
+    return c;
+    else if(fun(a)*fun(c)<0)
+    return root(a,c);
+    else if(fun(c)*fun(b)<0)
+    return root(c,b);
+}
+int main()
+{
+    double a,b;
+
+    cout<<"enter value of a and b"<<endl;
+    cin>>a;
+    cin>>b;
+    cout<<"the root is "<<root(a,b);
+    return 0;
+}
+*-*---*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*--*
+
+*********************False position and Regula Falsi(EXP3)*******************************
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+int n;
+double fun(double x)
+{
+    return ((x*x*x)-(2*x*x)+3);
+}
+double root(double a, double b)
+{
+    double c;
+    int i;
+    for(i=0;i<n;i++)
+    {
+    c=b-(((b-a)*fun(b))/(fun(b)-fun(a)));
+    if(fun(a)*fun(c)<0)
+    a=c;
+    else if(fun(c)*fun(b)<0)
+    c=b;
+    }
+    return c;
+}
+int main()
+{
+    double a,b;
+    cout<<"Enter no. of ITERATION:\n";
+    cin>>n;
+    cout<<"enter value of a and b"<<endl;
+    cin>>a;
+    cin>>b;
+    cout<<"the root is "<<root(a,b);
+    return 0;
+}
+
+*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-*-**-*-*-*--*-**-*--*--*-*-*-**--*
+
+*****************************Secant method(EXP4)*****************************
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+int n;
+double fun(double x)
+{
+    return ((x*x*x)-(2*x*x)+3);
+}
+double root(double a, double b)
+{
+    double c;
+    int i;
+    for(i=0;i<n;i++)
+    {
+    cout<<a<<" = "<<fun(a)<<"\n\n";
+    cout<<b<<" = "<<fun(b)<<"\n\n";
+    c=b-(((b-a)*fun(b))/(fun(b)-fun(a)));
+    a=b;
+    b=c;
+    cout<<c<<" = "<<fun(c)<<"\n\n";
+    if(fun(c)<=0.001 && fun(c)>=-0.001)
+        break;
+
+        cout<<"\n";
+    }
+    return c;
+}
+int main()
+{
+    double a,b;
+    cout<<"Enter no. of ITERATION:\n";
+    cin>>n;
+    cout<<"enter value of a and b : \n";
+    cin>>a>>b;
+    cout<<"the root is :\n"<<root(a,b);
+    return 0;
+}
+
+*-*-*-*--*-*-*-*-*-*-*-*--*-*-*-*-*-**-*-*-*-*-*-*---*-*-*-*-*
+
+*****************************Gauss Siedal method(EXP5)********************
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    float a[10][10], b[10], x[10], y[10];
+    int n = 0, m = 0, i = 0, j = 0;
+    cout << "Enter size of 2d array(Square matrix) : ";
+    cin >> n;
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            cout << "Enter values no :(" << i << ", " << j << ") ";
+            cin >> a[i][j];
+        }
+    }
+    cout << "\nEnter Values to the right side of equation\n";
+    for (i = 0; i < n; i++)
+    {
+        cout << "Enter values no :(" << i << ", " << j << ") ";
+        cin >> b[i];
+    }
+    cout << "Enter initial values of x,y,z\n";
+    for (i = 0; i < n; i++)
+    {
+        cout << "Enter values no. :(" << i<<"):";
+        cin >> x[i];
+    }
+    cout << "\nEnter the no. of iteration : ";
+    cin >> m;
+    while (m > 0)
+    {
+        for (i = 0; i < n; i++)
+        {
+            y[i] = (b[i] / a[i][i]);
+            for (j = 0; j < n; j++)
+            {
+                if (j == i)
+                continue;
+                y[i] = y[i] - ((a[i][j] / a[i][i]) * x[j]);
+                x[i] = y[i];
+            }
+            cout<<i+1<<"="<<y[i]<<"\n";
+        }
+        cout << "\n";
+        m--;
+    }
+    return 0;
+}
+*-*-*-*-*-*--*-*-*-*--*-*-*-*-*-*-**--*-*-**--**-*--*-*-*-*-*-*-*--**-*-*-*-*-
+
+************************Least square method to fit a straigth line(EXP6)*************************
+
+#include<iostream>
+#include<iomanip>
+#include<cmath>
+using namespace std;
+int main()
+{
+    int i,j,k,n;
+    cout<<"\nEnter the no. of data pairs to be entered:\n";
+    cin>>n;
+    double x[n],y[n],a,b;
+    cout<<"\nEnter the x-axis values:\n";
+    for (i=0;i<n;i++)
+        cin>>x[i];
+    cout<<"\nEnter the y-axis values:\n";
+    for (i=0;i<n;i++)
+        cin>>y[i];
+    double xsum=0,x2sum=0,ysum=0,xysum=0;
+    for (i=0;i<n;i++)
+    {
+        xsum=xsum+x[i];
+        ysum=ysum+y[i];
+        x2sum=x2sum+pow(x[i],2);
+        xysum=xysum+x[i]*y[i];
+    }
+    a=(n*xysum-xsum*ysum)/(n*x2sum-xsum*xsum);
+    b=(x2sum*ysum-xsum*xysum)/(x2sum*n-xsum*xsum);
+    double y_fit[n];
+    for (i=0;i<n;i++)
+        y_fit[i]=a*x[i]+b;
+    cout<<"S.no"<<setw(5)<<"x"<<setw(19)<<"y(observed)"<<setw(19)<<"y(fitted)"<<endl;
+    cout<<"-----------------------------------------------------------------\n";
+    for (i=0;i<n;i++)
+        cout<<i+1<<"."<<setw(8)<<x[i]<<setw(15)<<y[i]<<setw(18)<<y_fit[i]<<endl;
+    cout<<"\nThe linear fit line is of the form:\n\n"<<a<<"x + "<<b<<endl;
+    return 0;
+}
+*-*-*-*-**-*-*--*-*-*-*-*-*-*-*-**-*-*-**-*-*-*-*--**-*--*-*-**-*-*-*-*-*-**-*--**--*-**-*-***-
+
+*****************Newton Forward****************
+1.Forward
+#include <iostream>
+using namespace std;
+float cals(float u, int n)
+{
+    float temp = u;
+    for (int i = 1; i < n; i++)
+        temp = temp * (u - i);
+    return temp;
+}
+
+int fact(int n)
+{
+    int f = 1;
+    for (int i = 2; i <= n; i++)
+        f *= i;
+    return f;
+}
+
+int main()
+{
+
+    int n = 5;
+    float x[n];//= { 10,20,30,40,50 };
+    float y[n][n];
+    int i,j=0;
+   /* y[0][0] = 46;
+    y[1][0] = 66;
+    y[2][0] = 81;
+    y[3][0] = 93;
+    y[4][0] = 101;*/
+        for (i = 0; i < n; i++)
+            {
+            cout<<"Enter values of x:(" << i <<") ";
+            cin>> x[i];
+            cout<< "\n";
+            }
+        for (i = 0; i < n; i++)
+            {
+            cout<<"Enter values of y:(" << i << ", " << j << ") ";
+            cin>> y[i][0];
+            cout<< "\n";
+            }
+
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 0; j < n - i; j++)
+            y[j][i] = y[j + 1][i - 1] - y[j][i - 1];
+    }
+
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << x[i]<< "\t";
+        for (int j = 0; j<n-i; j++)
+            cout << y[i][j]<< "\t";
+        cout << endl;
+    }
+
+
+    float value = 15;
+    float sum = y[0][0];
+    float u = (value - x[0]) / (x[1] - x[0]);
+    for (int i = 1; i < n; i++)
+    {
+        sum = sum + (cals(u, i) * y[0][i]) /fact(i);
+    }
+
+    cout << "\n Value at " << value << " is "<< sum << endl;
+    return 0;
+}
+*-*--**-*-*-*-*-*--*-**-*-*--*-*-*-*-**-*-**-*-*-*-*-*-*-*-*-**-*-
+***************Newton Backward*************************
+#include <iostream>
+using namespace std;
+
+float cals(float u, int n)
+{
+    float temp = u;
+    for (int i = 1; i < n; i++)
+        temp = temp * (u + i);
+    return temp;
+}
+
+int fact(int n)
+{
+    int f = 1;
+    for (int i = 2; i <= n; i++)
+        f *= i;
+    return f;
+}
+
+int main()
+{
+
+    int n = 5;
+    float x[n];//= { 10,20,30,40,50 };
+    float y[n][n];
+    int i,j=0;
+   /* y[0][0] = 46;
+    y[1][0] = 66;
+    y[2][0] = 81;
+    y[3][0] = 93;
+    y[4][0] = 101;*/
+        for (i = 0; i < n; i++)
+            {
+            cout<<"Enter values of x:(" << i <<") ";
+            cin>> x[i];
+            cout<< "\n";
+            }
+        for (i = 0; i < n; i++)
+            {
+            cout<<"Enter values of y:(" << i << ", " << j << ") ";
+            cin>> y[i][0];
+            cout<< "\n";
+            }
+
+    for (i = 1; i < n; i++)
+        {
+        for (j = n - 1; j >= i; j--)
+            {
+               y[j][i] = y[j][i - 1] - y[j - 1][i - 1];
+            }
+        }
+        cout<<"x"<<"\t"<<"y"<<"\t"<<"dy"<<"\t"<<"d2y"<<"\t"<<"d3y"<<"\t"<<"d4y"<<"\t"<<"\n";
+        for (int i = 0; i < n; i++)
+        {
+            cout<< x[i]<< "\t";
+        for (j = 0; j <= i; j++)
+            cout << y[i][j]<< "\t";
+        cout << endl;
+        }
+
+
+    float value = 15;
+    float sum = y[n - 1][0];
+    float u = (value - x[n - 1]) / (x[1] - x[0]);
+    for (i = 1; i < n; i++)
+        {
+        sum = sum + (cals(u, i) * y[n - 1][i]) /fact(i);
+        }
+
+    cout << "\n Value at " << value << " is "<< sum << endl;
+    return 0;
+}
+**-*-**--*-**--*-*-*-*-**--*-**---*-*-*-**--*-*-*-*-*-*-**--*-**---*
+*********************Trapazodial******************************
+1. Trapezium
+#include<iostream>
+using namespace std;
+float func(float x)
+{
+    return (0.2+ 25*x - 200*x*x + 675*x*x*x - 900*x*x*x*x + 400*x*x*x*x*x);
+}
+int main()
+{
+    float a,b;
+    cout<<"Enter Lower Limit : ";
+    cin>>a;
+    cout<<"Enter Upper Limit : ";
+    cin>>b;
+    cout<<"\n";
+    float t=(b-a)*(func(a)+func(b))/2;
+    cout<<"Solution : "<<t;
+    return 0;
+}
+*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*---**-*--**-*-*-*-*-*-*-*-*-*-*-*-*--**-*-*-*-
+****************************3/8 simpons rules*************************
+#include<iostream>
+using namespace std;
+float func(float x)
+{
+    return (0.2+ 25*x - 200*x*x + 675*x*x*x - 900*x*x*x*x + 400*x*x*x*x*x);
+}
+
+int main()
+{
+    float a,b;
+    cout<<"Enter Lower Limit : ";
+    cin>>a;
+    cout<<"Enter Upper Limit : ";
+    cin>>b;
+    cout<<"\n";
+    float h=(b-a)/3;
+    float s=(3*h)/8*(func(a)+3*func(a+h)+3*func(a+2*h)+3*func(a+3*h));
+    cout<<"Solution : "<<s;
+    return 0;
+}
+
+***********************************3.Lagranges******************************
+#include<iostream>
+using namespace std;
+int main()
+{
+    int n,i,j;
+    cout<<"Enter number of data sets: ";
+    cin>>n;
+    float x[n],y[n],p;
+
+    for(i=0;i<n;i++)
+    {
+        cin>>x[i];
+        cout<<"\t";
+        cin>>y[i];
+    }
+    cout<<"\nEnter value of x: ";
+    cin>>p;
+    float num,denom,fx;
+    fx=0;
+    for(i=0;i<n;i++)
+    {
+        num=1;
+        denom=1;
+        for(j=0;j<n;j++)
+        {
+            if(i!=j)
+            {
+                num=num*(p-x[j]);
+                denom=denom*(x[i]-x[j]);
+            }
+        }
+        fx=fx+((num/denom)*y[i]);
+    }
+    cout<<"\nf(x) = "<<fx;
+    return 0;
+}
+*-*-*--**--**-*-*--*-**--**--*-**-*--*-**--**-*-*-*-*-*-*-*--**-*--**-*-*-*--*
+************************Eulers*********************
+#include <iostream>
+using namespace std;
+
+// dy/dx=(x +y+xy)
+float func(float x, float y)
+{
+    return (x + y + x* y);
+}
+
+void euler(float x0, float y, float h, float x)
+{
+    float temp = 0,n=0;
+
+    while (x0 < x)
+    {
+        temp = y;
+        y = y + h * func(x0, y);
+        x0 = x0 + h;
+    cout << "Solution now  = "<< n<<":"<<x << "  is  " << y << endl;
+    n++;
+    }
+    cout << "Approximate solution at x = "<< x << "  is  " << y << endl;
+
+}
+int main()
+{
+    float x0 = 0;
+    float y0 = 1;
+    float h = 0.025;
+
+    float x = 0.1;
+
+    euler(x0, y0, h, x);
+    return 0;
+}
+**************************************************RagneKutta*********************
+#include<iostream>
+#include<cmath>
+using namespace std;
+float fun(float x, float y)
+{
+	return((x+y)*sin(x*y));
+}
+int main()
+{
+	int i,j,t;
+	float x0,y0,x,h,y,k[20][20],Y[20],n,p,a;
+
+	cout<<"\n Enter the initial value of X:";
+	cin>>x0;
+	cout<<"\n Enter the initial value of Y:";
+	cin>>y0;
+	cout<<"\n Enter the given value of X:";
+	cin>>x;
+	cout<<"\n Enter the value of step size h:";
+	cin>>h;
+	n=(x-x0)/h;
+        t=(int)n;
+	cout<<"\nNumber of iterations is:\n"<<t;
+
+	for(i=1;i<=t;i++)
+	{
+		k[i][1]=h*fun(x0,y0);
+		k[i][2]=h*fun(x0+0.5*h,y0+0.5*k[i][1]);
+		k[i][3]=h*fun(x0+0.5*h,y0+0.5*k[i][2]);
+		k[i][4]=h*fun(x0+h,y0+k[i][3]);
+		k[i][5]=(1.0/6.0)*(k[i][1]+2*k[i][2]+2*k[i][3]+k[i][4]);
+		x0=x0+h;
+		y=y0+k[i][5];
+		Y[i]=y;
+		y0=y;
+	}
+
+	cout<<"\nk1\t\tk2\t\tk3\t\tk4\t\tk\t\tY\n";
+	x0=x0-n*h;
+	p=h;
+
+	for(i=1;i<=t;i++)
+	{
+		for(j=1;j<=5;j++)
+		{
+            cout<<k[i][j]<<"\t";
+		}
+		a=x0+h;
+		cout<<"\nY"<<"("<<a<<")"<<"="<<Y[i];
+		cout<<"\n";
+		h=h+p;
+	}
+
+
+	cout<<"\nThe final value of Y:\t"<<y;
+}
+
+
+
+
